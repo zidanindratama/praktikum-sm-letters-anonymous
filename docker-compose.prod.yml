@@ -9,3 +9,7 @@ services:
       - .env.production
     ports:
       - "127.0.0.1:3003:80"
+    volumes:
+      - ./.env.production:/var/www/html/.env:ro
+      - ./writable:/var/www/html/writable
+      - ./public/uploads:/var/www/html/public/uploads
