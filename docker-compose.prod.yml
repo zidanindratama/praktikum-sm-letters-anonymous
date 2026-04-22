@@ -1,0 +1,11 @@
+services:
+  letters-anonymous-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: letters-anonymous-web
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    ports:
+      - "127.0.0.1:3003:80"
