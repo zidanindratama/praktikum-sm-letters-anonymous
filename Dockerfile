@@ -2,6 +2,15 @@ FROM composer:2 AS vendor
 
 WORKDIR /app
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libicu-dev \
+        libzip-dev \
+        unzip \
+    && docker-php-ext-install intl zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY . .
 
 RUN composer install \
