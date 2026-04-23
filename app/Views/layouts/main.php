@@ -94,6 +94,7 @@
         }
 
         .ui-pill,
+        .ui-pill-active,
         .ui-pill-dark,
         .ui-pill-danger {
             align-items: center;
@@ -116,6 +117,19 @@
 
         .ui-pill:hover {
             border-color: rgba(33, 28, 24, 0.26);
+            transform: translateY(-1px);
+        }
+
+        .ui-pill-active {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(255, 90, 10, 0.3);
+            color: var(--accent);
+            box-shadow: 0 16px 30px -26px rgba(255, 90, 10, 0.45);
+        }
+
+        .ui-pill-active:hover {
+            background: white;
+            border-color: rgba(255, 90, 10, 0.48);
             transform: translateY(-1px);
         }
 
@@ -205,6 +219,30 @@
             border: 1px dashed var(--line-dashed);
         }
 
+        .topbar-nav {
+            display: grid;
+            gap: 0.8rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            width: 100%;
+        }
+
+        .topbar-nav > * {
+            width: 100%;
+        }
+
+        .topbar-nav a,
+        .topbar-nav button {
+            text-align: center;
+        }
+
+        .topbar-nav form {
+            display: flex;
+        }
+
+        .topbar-nav form button {
+            width: 100%;
+        }
+
         @media (max-width: 768px) {
             .ui-title-display {
                 font-size: 2.5rem;
@@ -218,12 +256,39 @@
                 line-height: 1.8;
             }
         }
+
+        @media (min-width: 768px) {
+            .topbar-nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                width: auto;
+            }
+
+            .topbar-nav > *,
+            .topbar-nav form,
+            .topbar-nav form button {
+                width: auto;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen">
+    <?php
+    $currentPath = trim(service('uri')->getPath(), '/');
+    $normalizedPath = preg_replace('#^index\.php/?#', '', $currentPath) ?? $currentPath;
+    $normalizedPath = trim($normalizedPath, '/');
+
+    $isGroupActive = $normalizedPath === 'kelompok';
+    $isCreateActive = $normalizedPath === 'letters/create';
+    $isAdminActive = $normalizedPath === 'admin' || $normalizedPath === 'admin/login' || str_starts_with($normalizedPath, 'admin/');
+    $isGalleryActive = ! $isGroupActive && ! $isCreateActive && ! $isAdminActive;
+
+    $navClass = static fn (bool $active): string => $active ? 'ui-pill-active' : 'ui-pill';
+    ?>
     <div class="min-h-screen">
         <header class="border-b border-stone-900/8 bg-white/68 backdrop-blur-xl">
-            <div class="page-shell mx-auto flex flex-wrap items-center justify-between gap-5 px-5 py-5 sm:px-6 lg:px-8">
+            <div class="page-shell mx-auto flex flex-col gap-5 px-5 py-5 sm:px-6 lg:px-8 md:flex-row md:items-center md:justify-between">
                 <a href="<?= site_url('/') ?>" class="flex min-w-0 items-center gap-4">
                     <span class="h-10 w-px bg-stone-900/12"></span>
                     <div class="min-w-0">
@@ -231,17 +296,18 @@
                         <p class="truncate text-[1.9rem] font-extrabold tracking-[-0.05em] text-stone-900">Letters Anonymous</p>
                     </div>
                 </a>
-                <nav class="flex flex-wrap items-center gap-3">
-                    <a href="<?= site_url('/') ?>" class="ui-pill">Galeri</a>
-                    <a href="<?= site_url('letters/create') ?>" class="ui-pill-dark">Tulis Surat</a>
+                <nav class="topbar-nav items-center">
+                    <a href="<?= site_url('/') ?>" class="<?= $navClass($isGalleryActive) ?>">Galeri</a>
+                    <a href="<?= site_url('kelompok') ?>" class="<?= $navClass($isGroupActive) ?>">Kelompok</a>
+                    <a href="<?= site_url('letters/create') ?>" class="<?= $isCreateActive ? 'ui-pill-active' : 'ui-pill-dark' ?>">Tulis Surat</a>
                     <?php if (session()->get('is_admin')): ?>
-                        <a href="<?= site_url('admin') ?>" class="ui-pill">Dashboard</a>
+                        <a href="<?= site_url('admin') ?>" class="<?= $navClass($isAdminActive) ?>">Dashboard</a>
                         <form action="<?= site_url('admin/logout') ?>" method="post" class="inline-flex">
                             <?= csrf_field() ?>
                             <button type="submit" class="ui-pill">Logout</button>
                         </form>
                     <?php else: ?>
-                        <a href="<?= site_url('admin/login') ?>" class="ui-pill">Admin</a>
+                        <a href="<?= site_url('admin/login') ?>" class="<?= $navClass($isAdminActive) ?>">Admin</a>
                     <?php endif; ?>
                 </nav>
             </div>

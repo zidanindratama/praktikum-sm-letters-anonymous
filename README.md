@@ -1,8 +1,16 @@
 # Letters Anonymous
 
-![Letters Anonymous Banner](public/banner.png)
+[![Letters Anonymous Banner](public/banner.png)](https://letters.taxcenterug.com/)
 
 Project praktikum Sistem Multimedia berbasis `CodeIgniter 4`, `MySQL`, dan `Tailwind CSS CDN` untuk mengirim, menampilkan, mengelola, dan memoderasi surat anonim dengan gambar.
+
+Website production dapat diakses di:
+
+- [https://letters.taxcenterug.com/](https://letters.taxcenterug.com/)
+
+Panduan deploy ke Hostinger VPS tersedia di:
+
+- [DEPLOY_HOSTINGER_VPS.md](DEPLOY_HOSTINGER_VPS.md)
 
 ## Gambaran Umum
 
@@ -162,19 +170,14 @@ View admin:
 - [app/Views/admin/index.php](app/Views/admin/index.php)
 - [app/Views/admin/edit.php](app/Views/admin/edit.php)
 
-## Kredensial Admin Default
+## Konfigurasi Admin
 
-Kredensial development saat ini disimpan di `.env`.
-
-- Username: `admin`
-- Password: `admin123`
+Kredensial admin dikelola melalui environment aplikasi dan tidak ditampilkan di dokumentasi ini.
 
 Konfigurasi terkait:
 
 - [`.env`](.env)
 - [env](env)
-
-Sebaiknya password diganti sebelum demo final atau presentasi.
 
 ## Konfigurasi Database
 

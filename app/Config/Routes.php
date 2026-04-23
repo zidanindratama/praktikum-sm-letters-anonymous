@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Letters::index');
 $routes->get('letters', 'Letters::index');
+$routes->get('kelompok', 'Letters::team');
 $routes->get('letters/create', 'Letters::create');
 $routes->post('letters', 'Letters::store');
 $routes->post('letters/(:segment)/edit-access', 'Letters::authorizeEdit/$1');

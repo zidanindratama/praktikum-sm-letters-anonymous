@@ -9,10 +9,9 @@
         <h1 class="ui-title-page mt-5 font-extrabold text-white">Masuk ke dashboard moderasi.</h1>
         <p class="mt-5 text-[1rem] leading-9 text-stone-300">Admin dashboard dipakai untuk mencari, mengurutkan, memeriksa, mengedit, dan menghapus surat tanpa perlu passcode user.</p>
         <div class="mt-8 rounded-[1.6rem] border border-white/10 bg-white/5 p-5 text-sm leading-8 text-stone-300">
-            <p class="font-bold text-white">Kredensial default development</p>
-            <p class="mt-2">Username: <span class="font-mono">admin</span></p>
-            <p>Password: <span class="font-mono">admin123</span></p>
-            <p class="mt-3 text-xs text-stone-400">Nilai ini diambil dari `.env` dan sebaiknya diganti sebelum project dipresentasikan.</p>
+            <p class="font-bold text-white">Akses admin</p>
+            <p class="mt-2">Gunakan akun administrator yang sudah dikonfigurasi pada environment aplikasi.</p>
+            <p class="mt-3 text-xs text-stone-400">Untuk keamanan, detail kredensial tidak ditampilkan pada halaman login.</p>
         </div>
     </div>
 

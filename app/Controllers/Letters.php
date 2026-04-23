@@ -70,6 +70,30 @@ class Letters extends BaseController
         return view('letters/create');
     }
 
+    public function team(): string
+    {
+        return view('letters/team', [
+            'members' => [
+                [
+                    'npm'  => '50422428',
+                    'name' => 'DIMAS ARYA SAUKI ALAUDIN',
+                ],
+                [
+                    'npm'  => '50422968',
+                    'name' => 'MUHAMAD ZIDAN INDRATAMA',
+                ],
+                [
+                    'npm'  => '51422157',
+                    'name' => 'MUHAMMAD SANUSI AMIR BAYQUNI',
+                ],
+                [
+                    'npm'  => '51422279',
+                    'name' => 'PANGERAN MAHARESI DUNIA',
+                ],
+            ],
+        ]);
+    }
+
     public function store(): RedirectResponse
     {
         $rules = [
