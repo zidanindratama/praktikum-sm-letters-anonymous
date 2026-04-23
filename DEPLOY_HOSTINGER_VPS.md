@@ -349,6 +349,12 @@ Workflow final yang dipakai:
 
 - [.github/workflows/deploy-vps.yml](.github/workflows/deploy-vps.yml)
 
+Catatan:
+
+- workflow lama dengan secret `HOSTINGER_*` sudah tidak dipakai
+- workflow aktif sekarang menggunakan secret dengan prefix `VPS_*`
+- jika repository masih punya secret `HOSTINGER_*`, secret itu boleh dibiarkan atau dihapus, tetapi tidak akan dibaca oleh workflow baru
+
 Workflow ini melakukan:
 
 1. checkout code
@@ -414,7 +420,13 @@ Generate dari lokal:
 ssh-keyscan -p 3190 -t rsa,ecdsa,ed25519 148.230.102.236 2>/dev/null
 ```
 
-Simpan seluruh output command itu sebagai isi secret `VPS_KNOWN_HOSTS`.
+Kalau output hanya menampilkan satu baris key seperti `ecdsa`, cukup simpan baris key tersebut saja dan abaikan baris komentar yang diawali `#`.
+
+Contoh:
+
+```text
+[148.230.102.236]:3190 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCSJuTcU6vTLeNYiSe3fMlE6+1V+wxw42TsBZk/bwghGvYwGLufeCOJLPasZHGz915vA0K4vOQTo1ZPpsX13Bpw=
+```
 
 ## Tahap 16: Menjalankan CI/CD
 
@@ -512,6 +524,7 @@ sudo systemctl status nginx
 
 Pastikan:
 
+- secret yang dipakai bernama `VPS_*`, bukan `HOSTINGER_*`
 - `VPS_SSH_KEY` benar
 - `VPS_KNOWN_HOSTS` benar
 - port SSH benar
