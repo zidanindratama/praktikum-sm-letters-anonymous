@@ -219,6 +219,41 @@
             border: 1px dashed var(--line-dashed);
         }
 
+        .confirm-modal[hidden] {
+            display: none;
+        }
+
+        .confirm-modal {
+            align-items: center;
+            background: rgba(19, 16, 14, 0.48);
+            backdrop-filter: blur(8px);
+            display: flex;
+            inset: 0;
+            justify-content: center;
+            padding: 1.5rem;
+            position: fixed;
+            z-index: 80;
+        }
+
+        .confirm-modal__panel {
+            background: rgba(255, 252, 249, 0.98);
+            border: 1px solid rgba(33, 28, 24, 0.08);
+            border-radius: 1.75rem;
+            box-shadow: 0 40px 80px -40px rgba(26, 18, 13, 0.48);
+            max-width: 30rem;
+            padding: 1.75rem;
+            transform: translateY(0);
+            width: 100%;
+        }
+
+        .confirm-modal__actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
         .topbar-nav {
             display: grid;
             gap: 0.8rem;
@@ -329,5 +364,80 @@
             <?= $this->renderSection('content') ?>
         </main>
     </div>
+
+    <div id="confirm-modal" class="confirm-modal" hidden aria-hidden="true">
+        <div class="confirm-modal__panel">
+            <p class="text-[0.82rem] font-semibold uppercase tracking-[0.34em] text-rose-500">Konfirmasi Aksi</p>
+            <h2 id="confirm-modal-title" class="mt-3 text-[1.9rem] font-extrabold tracking-[-0.05em] text-stone-900">Hapus data ini?</h2>
+            <p id="confirm-modal-message" class="mt-4 text-[0.98rem] leading-8 text-stone-600">Tindakan ini tidak bisa dibatalkan.</p>
+            <div class="confirm-modal__actions">
+                <button type="button" id="confirm-modal-cancel" class="ui-pill">Batal</button>
+                <button type="button" id="confirm-modal-confirm" class="ui-pill-danger">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (() => {
+            const modal = document.getElementById('confirm-modal');
+            const title = document.getElementById('confirm-modal-title');
+            const message = document.getElementById('confirm-modal-message');
+            const cancelButton = document.getElementById('confirm-modal-cancel');
+            const confirmButton = document.getElementById('confirm-modal-confirm');
+
+            if (!modal || !title || !message || !cancelButton || !confirmButton) {
+                return;
+            }
+
+            let pendingForm = null;
+
+            const closeModal = () => {
+                modal.hidden = true;
+                modal.setAttribute('aria-hidden', 'true');
+                pendingForm = null;
+            };
+
+            document.addEventListener('submit', (event) => {
+                const form = event.target;
+
+                if (!(form instanceof HTMLFormElement) || !form.dataset.confirmMessage) {
+                    return;
+                }
+
+                event.preventDefault();
+                pendingForm = form;
+                title.textContent = form.dataset.confirmTitle || 'Konfirmasi aksi';
+                message.textContent = form.dataset.confirmMessage;
+                confirmButton.textContent = form.dataset.confirmActionLabel || 'Ya, lanjutkan';
+                modal.hidden = false;
+                modal.setAttribute('aria-hidden', 'false');
+            });
+
+            confirmButton.addEventListener('click', () => {
+                if (!pendingForm) {
+                    closeModal();
+                    return;
+                }
+
+                const form = pendingForm;
+                closeModal();
+                form.submit();
+            });
+
+            cancelButton.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !modal.hidden) {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

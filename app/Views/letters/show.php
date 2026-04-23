@@ -48,7 +48,14 @@
             <p class="text-[0.82rem] font-semibold uppercase tracking-[0.34em] text-rose-500">Delete</p>
             <h2 class="mt-3 text-[1.85rem] font-extrabold tracking-[-0.05em] text-stone-900">Hapus surat</h2>
             <p class="mt-3 text-[0.98rem] leading-8 text-stone-600">Saat surat dihapus, data database dan file gambar di folder `public/uploads` akan ikut dihapus.</p>
-            <form action="<?= site_url('letters/' . $letter['id'] . '/delete') ?>" method="post" class="mt-5 space-y-4">
+            <form
+                action="<?= site_url('letters/' . $letter['id'] . '/delete') ?>"
+                method="post"
+                class="mt-5 space-y-4"
+                data-confirm-message="Yakin ingin menghapus surat ini secara permanen? File gambar juga akan ikut dihapus."
+                data-confirm-title="Hapus surat ini?"
+                data-confirm-action-label="Ya, hapus surat"
+            >
                 <?= csrf_field() ?>
                 <input name="passcode" type="text" class="ui-input border-rose-200 bg-rose-50/85 focus:border-rose-400 focus:shadow-[0_0_0_4px_rgba(244,63,94,0.08)]" placeholder="Masukkan passcode untuk delete">
                 <button type="submit" class="ui-pill-danger">Hapus Permanen</button>

@@ -103,12 +103,18 @@ $end = min($pagination['currentPage'] * $pagination['perPage'], $pagination['tot
                                 <td class="px-6 py-5 text-sm text-stone-600"><?= esc(date('d M Y H:i', strtotime($letter['created_at']))) ?></td>
                                 <td class="px-6 py-5 text-sm text-stone-600"><?= esc(date('d M Y H:i', strtotime($letter['updated_at'] ?? $letter['created_at']))) ?></td>
                                 <td class="px-6 py-5">
-                                    <div class="flex flex-wrap gap-2">
-                                        <a href="<?= site_url('letters/' . $letter['id']) ?>" class="ui-pill min-h-0 px-4 py-2 text-xs">Detail</a>
-                                        <a href="<?= site_url('admin/letters/' . $letter['id'] . '/edit') ?>" class="ui-pill-dark min-h-0 px-4 py-2 text-xs">Edit</a>
-                                        <form action="<?= site_url('admin/letters/' . $letter['id'] . '/delete') ?>" method="post" onsubmit="return confirm('Hapus surat ini dari dashboard admin?');">
+                                    <div class="flex items-center gap-2 whitespace-nowrap">
+                                        <a href="<?= site_url('letters/' . $letter['id']) ?>" class="ui-pill min-h-0 shrink-0 px-4 py-2 text-xs">Detail</a>
+                                        <a href="<?= site_url('admin/letters/' . $letter['id'] . '/edit') ?>" class="ui-pill-dark min-h-0 shrink-0 px-4 py-2 text-xs">Edit</a>
+                                        <form
+                                            action="<?= site_url('admin/letters/' . $letter['id'] . '/delete') ?>"
+                                            method="post"
+                                            data-confirm-message="Yakin ingin menghapus surat ini dari dashboard admin secara permanen?"
+                                            data-confirm-title="Hapus data surat?"
+                                            data-confirm-action-label="Ya, hapus data"
+                                        >
                                             <?= csrf_field() ?>
-                                            <button type="submit" class="ui-pill-danger min-h-0 px-4 py-2 text-xs">Delete</button>
+                                            <button type="submit" class="ui-pill-danger min-h-0 shrink-0 px-4 py-2 text-xs">Delete</button>
                                         </form>
                                     </div>
                                 </td>
