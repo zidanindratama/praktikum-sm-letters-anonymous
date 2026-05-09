@@ -179,6 +179,14 @@ Konfigurasi terkait:
 - [`.env`](.env)
 - [env](env)
 
+Untuk membuat nilai `admin.password_hash`, jalankan command berikut:
+
+```bash
+php -r "echo password_hash('admin123', PASSWORD_DEFAULT);"
+```
+
+Ganti `admin123` dengan password admin yang ingin dipakai, lalu salin hasil hash-nya ke konfigurasi `.env`.
+
 ## Konfigurasi Database
 
 Contoh konfigurasi `.env`:
@@ -208,7 +216,7 @@ composer install
 
 ### 2. Siapkan environment
 
-Copy file `env` menjadi `.env`, lalu isi konfigurasi database dan admin.
+Copy file `env` menjadi `.env`, lalu isi konfigurasi database dan admin. Untuk `admin.password_hash`, generate hash password terlebih dahulu seperti pada bagian [Konfigurasi Admin](#konfigurasi-admin).
 
 ### 3. Buat database
 
